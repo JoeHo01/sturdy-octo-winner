@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ws.http.mvc.dao.UserDao">
+
+    <sql id="userField">u.phone,u.password,u.signUpTime</sql>
+    <sql id="userTable">user u</sql>
+    <sql id="infoField">ui.userId,ui.weChat,ui.sex,ui.portrait,ui.sign,ui.updateTime</sql>
+    <sql id="infoTable">user_info ui</sql>
+
+    <resultMap id="UserPojo" type="com.ws.http.mvc.pojo.UserPojo">
+        <id column="userId" property="userId"/>
+        <result column="phone" property="phone"/>
+        <result column="password" property="password"/>
+        <result column="signUpTime" property="signUpTime"/>
+        
+        <result column="weChat" property="weChat"/>
+        <result column="sex" property="sex"/>
+        <result column="portrait" property="portrait"/>
+        <result column="sign" property="sign"/>
+        <result column="updateTime" property="updateTime"/>
+    </resultMap>
+
+    <insert id="addUser" useGeneratedKeys="true" keyProperty="userId">
+        INSERT INTO user (phone,password,signUpTime) VALUES (#{phone},#{password},now())
+    </insert>
+
+    <update id="updatePassword" useGeneratedKeys="true" keyProperty="userId">
+        UPDATE user SET password = #{password} WHERE phone = #{phone}
+    </update>
+
+    <select id="checkExist" resultType="int">
+        SELECT count(0) FROM user WHERE phone = #{_parameter}
+    </select>
+
+    <select id="getUser" resultType="String">
+        SELECT userId FROM user WHERE phone = #{phone} AND password = #{password}
+    </select>
+
+    <insert id="updateInfo" useGeneratedKeys="true" keyProperty="infoId">
+        INSERT INTO user_info (userId,weChat,sex,portrait,sign,updateTime) VALUES (#{userId},#{weChat},#{sex},#{portrait},#{sign},now())
+    </insert>
+
+    <select id="getInfo" resultMap="UserPojo">
+        SELECT u.phone,u.signUpTime,<include refid="infoField"/> FROM user u
+        LEFT JOIN user_info ui ON u.userId = ui.userId
+        WHERE u.userId = #{_parameter}
+        ORDER BY ui.userInfoId DESC LIMIT 1
+    </select>
+</mapper>

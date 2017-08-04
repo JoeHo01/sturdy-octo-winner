@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ws.http.mvc.dao.DecorateDao">
+
+    <update id="updateTitle" useGeneratedKeys="true" keyProperty="userId">
+        UPDATE shop_title SET img = #{1} WHERE shopId = #{0}
+    </update>
+
+    <insert id="addNavigation" useGeneratedKeys="true" keyProperty="navigationId">
+        INSERT INTO shop_navigation (shopId,name) VALUES (#{shopId},#{name})
+    </insert>
+
+    <update id="updateNavigation" useGeneratedKeys="true" keyProperty="navigationId">
+        UPDATE shop_navigation SET name = #{name} WHERE navigationId = #{navigationId}
+    </update>
+
+    <delete id="deleteNavigation" >
+        DELETE FROM shop_navigation WHERE navigationId = #{_parameter}
+    </delete>
+
+    <insert id="addGoodsToNvg" >
+
+    </insert>
+
+</mapper>
