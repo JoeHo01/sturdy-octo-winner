@@ -3,7 +3,9 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.ws.http.mvc.dao.DecorateDao">
+<mapper namespace="com.ws.http.mvc.dao.ShopDao">
+
+    <sql id="titleColumn">shopId,img</sql>
 
     <update id="updateTitle" useGeneratedKeys="true" keyProperty="userId">
         UPDATE shop_title SET img = #{1} WHERE shopId = #{0}
@@ -13,7 +15,7 @@
         INSERT INTO shop_navigation (shopId,name) VALUES (#{shopId},#{name})
     </insert>
 
-    <update id="updateNavigation" useGeneratedKeys="true" keyProperty="navigationId">
+    <update id="updateNavigation">
         UPDATE shop_navigation SET name = #{name} WHERE navigationId = #{navigationId}
     </update>
 
@@ -24,5 +26,9 @@
     <insert id="addGoodsToNvg" >
 
     </insert>
+
+    <select id="getTitle" resultType="HashMap">
+        SELECT shopTitleId,<include refid="titleColumn"/> FROM shop_title WHERE shopId = #{_parameter}
+    </select>
 
 </mapper>

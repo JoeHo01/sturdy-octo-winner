@@ -6,6 +6,7 @@ import com.ws.common.session.VerifyCodeManager;
 import com.ws.common.response.DataWrapper;
 import com.ws.common.utils.HttpUtil;
 import com.ws.common.utils.encryption.SingleEnUtil;
+import com.ws.http.annotation.Logger;
 import com.ws.http.mvc.dao.UserDao;
 import com.ws.http.mvc.pojo.UserPojo;
 import com.ws.http.mvc.service.UserService;
@@ -58,6 +59,7 @@ public class UserServiceImpl implements UserService {
         return dataWrapper;
     }
 
+    @Logger(log = "123")
     public DataWrapper<String> login(String phone, String password, String key) {
         DataWrapper<String> dataWrapper = new DataWrapper<String>();
         if (!checkExist(phone)) {

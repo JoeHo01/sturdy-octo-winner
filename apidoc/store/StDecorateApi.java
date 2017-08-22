@@ -40,7 +40,7 @@
      *
      * @apiParam {String} token     not_null | 身份验证
      * @apiParam {String} shopId    not_null | 店铺ID
-     * @apiParam {String} name      not_null | 导航栏名称(多个名称以","分隔,例:A,B,C)
+     * @apiParam {String} name      not_null | 导航栏名称
      *
      * @apiSuccessExample Success-Response:
      * HTTP/1.1 200 OK
@@ -72,7 +72,7 @@
      *
      * @apiParam {String} token             not_null | 身份验证
      * @apiParam {String} navigationId      not_null | 导航栏ID
-     * @apiParam {String} name              nullable | 导航栏名称(多个名称以","分隔,例:A,B,C)
+     * @apiParam {String} name              nullable | 导航栏名称
      *
      * @apiSuccessExample Success-Response:
      * HTTP/1.1 200 OK
@@ -127,47 +127,16 @@
      */
 
     /**
-     * @api {post} http://localhost:8080/we_shop/api/store/decorate/addGoodsToNvg 添加导航栏内容
-     * @apiName addGoodsToNvg
-     * @apiGroup Decorate
-     * @apiVersion 0.1.0
-     * @apiDescription 个人管理-装修商店-添加导航栏内容
-     *
-     * @apiParam {String} token             not_null | 身份验证
-     * @apiParam {String} navigationId      not_null | 导航栏ID
-     * @apiParam {String} goods             not_null | 商品(JSON数组的String格式.子项-goodsId:商品ID,displayType:展示方式 1大图显示 2小图显示. 例:JSON.stringfy([{goodsId:"3",displayType:"1"},{goodsId:"2",displayType:"2"}]))
-     *
-     * @apiSuccessExample Success-Response:
-     * HTTP/1.1 200 OK
-     * {
-     * callStatus:"SUCCEED",
-     * errorCode:"No_Error",
-     * token:null,
-     * data:null,
-     * page:null
-     * }
-     * @apiSuccessExample {json} Error-Response:
-     * HTTP/1.1 200 OK
-     * {
-     * callStatus:"FAILED",
-     * errorCode:"Error",
-     * token:null,
-     * data:null,
-     * page:null
-     * }
-     *
-     */
-
-    /**
-     * @api {post} http://localhost:8080/we_shop/api/store/decorate/updateGoodsInNvg 删除导航栏内容
+     * @api {post} http://localhost:8080/we_shop/api/store/decorate/updateGoodsInNvg 更新导航栏内容
      * @apiName updateGoodsInNvg
      * @apiGroup Decorate
      * @apiVersion 0.1.0
-     * @apiDescription 个人管理-装修商店-删除导航栏内容
+     * @apiDescription 个人管理-装修商店-添加/修改/删除导航栏内容
      *
      * @apiParam {String} token             not_null | 身份验证
      * @apiParam {String} navigationId      not_null | 导航栏ID
-     * @apiParam {String} goods             not_null | 商品(JSON数组的String格式.子项-goodsId:商品ID,displayType:展示方式 1大图显示 2小图显示. 例:JSON.stringfy([{goodsId:"3",displayType:"1"},{goodsId:"2",displayType:"2"}]))
+     * @apiParam {String} displayType       not_null | 展示方式(1大图显示, 2小图显示)
+     * @apiParam {String} goodsId           not_null | 商品ID(多个以","分隔. 例: 1,2,3)
      *
      * @apiSuccessExample Success-Response:
      * HTTP/1.1 200 OK
@@ -191,15 +160,15 @@
      */
 
     /**
-     * @api {post} http://localhost:8080/we_shop/api/store/decorate/addSlideshow 添加轮播区
+     * @api {post} http://localhost:8080/we_shop/api/store/decorate/addSlideshow 添加轮播区图片
      * @apiName addSlideshow
      * @apiGroup Decorate
      * @apiVersion 0.1.0
-     * @apiDescription 个人管理-装修商店-添加轮播区
+     * @apiDescription 个人管理-装修商店-添加轮播区图片
      *
-     * @apiParam {String} token     not_null | 身份验证
-     * @apiParam {String} shopId    not_null | 店铺ID
-     * @apiParam {File}   slideImg  not_null | 轮播图片
+     * @apiParam {String} token         not_null | 身份验证
+     * @apiParam {String} shopId        not_null | 商店ID
+     * @apiParam {File}   slideImg      not_null | 轮播图片
      *
      * @apiSuccessExample Success-Response:
      * HTTP/1.1 200 OK
@@ -223,15 +192,15 @@
      */
 
     /**
-     * @api {post} http://localhost:8080/we_shop/api/store/decorate/updateSlideshow 编辑轮播区
+     * @api {post} http://localhost:8080/we_shop/api/store/decorate/updateSlideshow 更新轮播区图片
      * @apiName updateSlideshow
      * @apiGroup Decorate
      * @apiVersion 0.1.0
-     * @apiDescription 个人管理-装修商店-编辑轮播区
+     * @apiDescription 个人管理-装修商店-编辑轮播区图片
      *
      * @apiParam {String} token         not_null | 身份验证
      * @apiParam {String} slideshowId   not_null | 轮播区ID
-     * @apiParam {File}   slideImg      nullable | 轮播图片
+     * @apiParam {File}   slideImg      not_null | 轮播图片
      *
      * @apiSuccessExample Success-Response:
      * HTTP/1.1 200 OK
@@ -255,14 +224,14 @@
      */
 
     /**
-     * @api {post} http://localhost:8080/we_shop/api/store/decorate/deleteSlideshow 删除轮播区
+     * @api {post} http://localhost:8080/we_shop/api/store/decorate/deleteSlideshow 删除轮播区图片
      * @apiName deleteSlideshow
      * @apiGroup Decorate
      * @apiVersion 0.1.0
-     * @apiDescription 个人管理-装修商店-删除轮播区
+     * @apiDescription 个人管理-装修商店-删除轮播区图片
      *
-     * @apiParam {String} token      not_null | 身份验证
-     * @apiParam {String} displayId  not_null | 轮播区ID
+     * @apiParam {String} token         not_null | 身份验证
+     * @apiParam {String} slideshowId   not_null | 轮播区ID
      *
      * @apiSuccessExample Success-Response:
      * HTTP/1.1 200 OK

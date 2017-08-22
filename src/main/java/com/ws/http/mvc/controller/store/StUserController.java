@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
@@ -28,14 +29,14 @@ public class StUserController {
     }
 
     /**
-     * @param token 用户验证
      * @return 用户信息
      */
     @RequestMapping(value = "getInfo", method = RequestMethod.POST)
     @ResponseBody
     public DataWrapper<UserPojo> getInfo(
-            @RequestParam String token
+            HttpServletRequest request
     ) {
+        String token = request.getHeader("Token");
         Map<String,String> payload = TokenManager.getPayload(token);
         assert payload != null;
         int userId = Integer.parseInt(payload.get("uid"));
@@ -53,9 +54,11 @@ public class StUserController {
     @RequestMapping(value = "updateInfo", method = RequestMethod.POST)
     @ResponseBody
     public DataWrapper<Void> updateInfo(
+            HttpServletRequest request,
             @RequestParam Map<String, String> param
     ) {
-        Map<String,String> payload = TokenManager.getPayload(param.get("token"));
+        String token = request.getHeader("Token");
+        Map<String,String> payload = TokenManager.getPayload(token);
         assert payload != null;
         String userId = payload.get("uid");
         param.put("userId", userId);

@@ -6,8 +6,6 @@ public class DataWrapper<D>  {
     private ErrorCodeEnum errorCode;
     private String errorLabel;
     private D data;
-
-    // 用于分页结果
     private Page page;
 
     public DataWrapper() {

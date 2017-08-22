@@ -2,6 +2,7 @@ package com.ws.http.mvc.controller.visitor;
 
 import com.ws.common.response.DataWrapper;
 import com.ws.common.utils.encryption.KeyUtil;
+import com.ws.http.annotation.Logger;
 import com.ws.http.mvc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

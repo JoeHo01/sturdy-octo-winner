@@ -44,19 +44,27 @@ public class FileUtil {
         return true;
     }
 
+    public static boolean createDirectory(String path) {
+        File file = new File(path);
+        return file.exists() || file.mkdirs();
+    }
 
-    public static boolean deleteFile(String filePath) {
-        File file = new File(filePath);
-        if (file.exists())
+    public static boolean deleteFile(String path) {
+        File file = new File(path);
+        if (file.exists()){
             file.delete();
-        return true;
+            return true;
+        }
+        else return false;
     }
 
     public static void upload(CommonsMultipartFile file, String path, String fileName) throws IOException {
-        File newFile = new File(path + fileName);
+        if (createDirectory(path)){
+            File newFile = new File(path + fileName);
+            //通过CommonsMultipartFile的方法直接写文件
+            file.transferTo(newFile);
+        }
 
-        //通过CommonsMultipartFile的方法直接写文件（注意这个时候）
-        file.transferTo(newFile);
     }
 
     public static void download(HttpServletRequest request, HttpServletResponse response, String path, String fileName) {

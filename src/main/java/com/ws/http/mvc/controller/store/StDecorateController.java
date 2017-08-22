@@ -1,6 +1,7 @@
 package com.ws.http.mvc.controller.store;
 
 import com.ws.common.response.DataWrapper;
+import com.ws.http.annotation.Logger;
 import com.ws.http.mvc.service.DecorateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
- *
  * Created by Jo on 2017/7/25.
  */
 @RequestMapping("api/store/decorate")
@@ -29,8 +29,7 @@ public class StDecorateController {
     }
 
     /**
-     *
-     * @param shopId 商店ID
+     * @param shopId   商店ID
      * @param titleImg 标题图片
      * @return null
      */
@@ -41,42 +40,36 @@ public class StDecorateController {
             @RequestParam("shopId") String shopId,
             @RequestParam("titleImg") CommonsMultipartFile titleImg
     ) {
-        String path = request.getServletContext().getRealPath("/resources/")+"/img/store/store#"+shopId+"/main/";
-        return decorateService.updateTitle(path,titleImg,shopId);
+        return decorateService.updateTitle(request, shopId, titleImg );
     }
 
     /**
-     *
-     * @param navigation
-     *      shopId:商店ID
-     *      name:导航栏名称
+     * @param navigation shopId:商店ID
+     *                   name:导航栏名称
      * @return null
      */
     @RequestMapping(value = "addNavigation", method = RequestMethod.POST)
     @ResponseBody
     public DataWrapper<Void> addNavigation(
-            @RequestParam Map<String,String> navigation
-            ) {
+            @RequestParam Map<String, String> navigation
+    ) {
         return decorateService.addNavigation(navigation);
     }
 
     /**
-     *
-     * @param navigation
-     *      navigationId:导航栏ID
-     *      name:导航栏名称
+     * @param navigation navigationId:导航栏ID
+     *                   name:导航栏名称
      * @return null
      */
     @RequestMapping(value = "updateNavigation", method = RequestMethod.POST)
     @ResponseBody
     public DataWrapper<Void> updateNavigation(
-            @RequestParam Map<String,String> navigation
+            @RequestParam Map<String, String> navigation
     ) {
         return decorateService.updateNavigation(navigation);
     }
 
     /**
-     *
      * @param navigationId:导航栏ID
      * @return null
      */
@@ -89,46 +82,43 @@ public class StDecorateController {
     }
 
     /**
+     * 添加/编辑/删除 导航栏内容
      *
-     * @param nvgContent
-     *      navigationId:导航栏ID
-     *      goodsId:商品ID
-     *      displayType:展示方式(1大图显示,2小图显示)
+     * @param nvgContent navigationId:导航栏ID
+     *                   displayType:展示方式(1大图显示,2小图显示)
+     *                   goodsId:商品ID
      * @return null
      */
-    @RequestMapping(value = "addGoodsToNvg", method = RequestMethod.POST)
+    @RequestMapping(value = "updateGoodsToNvg", method = RequestMethod.POST)
     @ResponseBody
-    public DataWrapper<Void> addGoodsToNvg(
-            @RequestParam Map<String,String> nvgContent
+    public DataWrapper<Void> updateGoodsToNvg(
+            @RequestParam Map<String, String> nvgContent
     ) {
-        return decorateService.addGoodsToNvg(nvgContent);
+        return decorateService.updateGoodsToNvg(nvgContent);
     }
-//
-//    /**
-//     *
-//     * @param nvgContentId 导航栏内容子项ID
-//     * @return null
-//     */
-//    @RequestMapping(value = "deleteGoodsInNvg", method = RequestMethod.POST)
-//    @ResponseBody
-//    public DataWrapper<Void> deleteGoodsInNvg(
-//            @RequestParam String nvgContentId
-//    ) {
-//        return decorateService.deleteGoodsInNvg(nvgContentId);
-//    }
-//
-//    /**
-//     *
-//     * @param slideshow
-//     *      shopId:商店ID
-//     *      slideImg:轮播图片
-//     * @return
-//     */
-//    @RequestMapping(value = "addSlideshow", method = RequestMethod.POST)
-//    @ResponseBody
-//    public DataWrapper<Void> addSlideshow(
-//            @RequestParam Map<String,String> slideshow
-//    ) {
-//        return decorateService.addSlideshow(slideshow);
-//    }
+
+    /**
+     * @param slideshowId 轮播区ID
+     * @param slideImg    轮播图片
+     * @return
+     */
+    @RequestMapping(value = "updateSlideshow", method = RequestMethod.POST)
+    @ResponseBody
+    public DataWrapper<Void> updateSlideshow(
+            HttpServletRequest request,
+            @RequestParam("slideshowId") String slideshowId,
+            @RequestParam("slideImg") CommonsMultipartFile slideImg
+    ) {
+        return decorateService.updateSlideshow(request, slideshowId, slideImg);
+    }
+
+    public DataWrapper<Void> addSlideshow(
+            HttpServletRequest request,
+            @RequestParam("shopId") String shopId,
+            @RequestParam("slideImg") CommonsMultipartFile[] slideImg
+    ){
+        return decorateService.addSlideshow(request,shopId,slideImg);
+    }
+
+
 }
